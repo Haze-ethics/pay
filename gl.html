@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PhonePe Cashback</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f5;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #6739b7;
+            padding: 16px;
+            height: 56px;
+        }
+
+        .content {
+            height: calc(100vh - 56px);
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .success-image {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 24px;
+            object-fit: contain;
+        }
+
+        .amount {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 16px 0;
+            color: #1a1a1a;
+        }
+
+        .timestamp {
+            color: #666;
+            margin: 8px 0;
+            font-size: 16px;
+        }
+
+        .transaction-details {
+            background: #f8f8f8;
+            padding: 16px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            margin: 24px 0;
+        }
+
+        .transaction-id {
+            color: #666;
+            font-size: 14px;
+            margin: 8px 0;
+        }
+
+        .transaction-time {
+            color: #666;
+            font-size: 14px;
+            margin: 8px 0;
+        }
+
+        .balance-button {
+            background: #6739b7;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: auto;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 12px rgba(103, 57, 183, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic" loop>
+        <source src="audio.mp3" type="audio/mpeg">
+    </audio>
+    
+    <div class="header"></div>
+    <div class="content">
+        <img src="1.png" alt="Success" class="success-image">
+        <div class="cashback">
+            <div class="amount">₹8,100</div>
+        </div>
+        <div class="timestamp">Received in your account</div>
+        <div class="transaction-details">
+            <div id="transaction-id" class="transaction-id"></div>
+            <div id="transaction-time" class="transaction-time"></div>
+        </div>
+        <button class="balance-button">Check your balance now</button>
+    </div>
+
+    <script>
+        // Play background music
+        window.addEventListener('load', function() {
+            const music = document.getElementById('bgMusic');
+            music.play().catch(function(error) {
+                console.log("Audio autoplay failed:", error);
+            });
+        });
+
+        // Generate random transaction ID and update time
+        function generateTransactionId() {
+            let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let transactionId = '';
+            for (let i = 0; i < 16; i++) {
+                transactionId += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('transaction-id').textContent = 
+                `Transaction ID: ${transactionId}`;
+        }
+
+        // Update transaction time
+        function updateTransactionTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour: 'numeric',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true 
+            });
+            document.getElementById('transaction-time').textContent = 
+                `Transaction Time: ${timeString}`;
+        }
+
+        // Initialize
+        generateTransactionId();
+        updateTransactionTime();
+        setInterval(updateTransactionTime, 1000);
+    </script>
+</body>
+</html>
